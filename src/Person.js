@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-// 함수 처럼 사용
+// 함수 컴포넌트
 // function Person({country, name, age}) {
 //     return (
 //         <>
@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 //     )
 // }
 
-// 화살표 함수 처럼 사용
+// 화살표 함수 컴포넌트
 // const Person = ({country, name, age}) => {
 //     return (
 //         <>

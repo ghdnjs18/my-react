@@ -1,0 +1,28 @@
+/* search */
+/* .searchArea{background: #77655a; position:fixed; top:0; left:0; right:0; display: flex; justify-content: center; align-items: center; height:auto; z-index: 2;}
+.searchInner{width:60%; margin:3em auto; display: flex; align-items: center; justify-content: center; position:relative;}
+select{width: 100%; padding:1.5em; background:url(./images/select-arrow.svg) no-repeat #fff 95% center; background-size:48px auto;border:0; border-right:1px solid #ddd; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+input{padding:1.5em; border:0; width: 100%; width: -moz-available; width: -webkit-fill-available; width: fill-available;}    
+input[type=submit]{background:#fff; border-left:1px solid #ddd; cursor: pointer; background:#eaeae0; font-weight:700;} 
+input[type=submit]:hover{background:#d8d8cb;}
+select::-ms-expand {display: none;} /* select 기본 화살표 제거 */
+/* .inputArea{position:relative; z-index: 1;} */
+
+/*  */
+#search-box{width: 100%; text-align: center; margin: 50px auto;}
+#search{all: unset; width: 400px; height: 50px; border-radius: 30px; padding-left: 20px; text-align: left; border: 2px solid rgb(224, 224, 224); color: #256dc0;}
+#select-box{all: unset; width: 50px; height: 30px; border-radius: 20px; padding-left: 20px; text-align: left; border: 2px solid rgb(224, 224, 224); color: #256dc0;}
+#submit{all: unset; background-color: rgb(236, 217, 169); cursor: pointer; width: 100px; height: 30px; padding: 10px; border-radius: 20px; font-weight:bold;}
+#submit:hover{background-color: #d6a87a;}
+
+/* content */
+.resultArea{padding:3em 0; margin:150px auto 0 auto; position:relative; z-index: 1;}
+.resultInner{width:60%; margin:0 auto;}
+.resultInner .item{background:rgb(250, 246, 236); border:1px solid #ddd; border-radius: 10px; padding:1.5em; position:relative; margin-bottom:1em;}
+.item .word{font-weight:bold; font-size:1.25em; padding-bottom:1.5em;}
+.item .word sup{font-size:0.5em; padding-left:0.25em;}
+.item .word .hanja{font-weight:400; display:inline; padding-left:0.25em;}
+.item .word a{font-size: 0.75em; color: #fff; display: inline-block; position: absolute; top: 1.75em; right: 1.5em; padding: 0.5em; background: #8a8076; border-radius: 5px; text-decoration: none; }
+.item .word a:visited{text-decoration: none;}
+.item .description{margin:0; line-height:1.5em;}
+.item .description span{font-weight:700; color:#56a078; margin-right:0.5em; }
