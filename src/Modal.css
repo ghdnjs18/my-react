@@ -1,5 +1,5 @@
 .Modal {
-    width: 500px;
+    width: 100%;
     margin: 100px auto;
     border: 1px solid tan;
     border-radius: 5px;
@@ -36,6 +36,7 @@
 
 .footer {
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    justify-content: center;
     align-items: center; /* 현재 필요가없음 */
 }

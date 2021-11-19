@@ -4,7 +4,7 @@
     cursor: pointer;
     border-Radius: 5px;
     font-Weight: bold;
-    margin-left: 10px;
+    margin: 10px 10px auto;
     /* 정렬을 하기전에 사용해야함 */
     display: inline-flex;
     /* 수직 정렬 */
@@ -57,10 +57,16 @@
     background: lightgrey;
 }
 
+.green {
+    background: limegreen;
+}
+
+.green:hover {
+    background: green;
+}
+
 /* 전체 너비를 차지하는 버튼 */
 .fullWidth {
     width: 100%;
-    margin-left: 0px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin: 20px 0 10px auto;
 }

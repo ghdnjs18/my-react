@@ -1,0 +1,368 @@
+import './App.css';
+import React, { Component } from 'react';
+import images from './imageData'
+import Button from './Button';
+import Sidebar from './Sidebar';
+import Videos from './youtubeVideos';
+
+
+// 이미지 갤러리 
+class App extends Component {
+	state = {
+		index: 0
+	}
+
+	decreaseIndex = () => {
+		const nextIndex = this.state.index - 1
+		this.setState({index: (nextIndex < 0) ? images.length - 1 : nextIndex})
+	}
+	increaseIndex = () => {
+		const nextIndex = this.state.index + 1
+		this.setState({index: (nextIndex > images.length - 1) ? 0 : nextIndex})
+	}
+
+	render () {
+		const { index } = this.state
+		const { increaseIndex, decreaseIndex } = this
+		const path = images[index].src
+		const title = images[index].title
+		return (
+			<div className="App">
+				<div className="img-container">
+					<img src={path} alt={title}/>
+				</div>
+
+				<div ckassName="control-btns">
+					<Button handleClick={decreaseIndex}>Prev</Button>
+					<Button handleClick={increaseIndex}>Next</Button>
+				</div>
+			</div>
+		)
+	}
+}
+
+// 사이드 메뉴
+class App extends Component {
+	state = {
+		toggle: false, 
+		menus: [ 
+			{ 
+				icon: '♜', 
+				title: 'HOME' 
+			}, 
+			{ 
+				icon: '♞', 
+				title: 'ABOUT' 
+			}, 
+			{ 
+				icon: '☻', 
+				title: 'SETTING' 
+			}, 
+			{ 
+				icon: '♜', 
+				title: 'HOME' 
+			}, 
+			{ 
+				icon: '♞', 
+				title: 'ABOUT' 
+			}, 
+			{ 
+				icon: '☻', 
+				title: 'SETTING' 
+			} 
+		] 
+	} 
+	
+	toggleMenu = () => {
+		this.setState({toggle: !this.state.toggle}) } 
+
+	render(){ 
+		const { toggle, menus } = this.state 
+		return ( 
+			<div className="App"> 
+				<Button handleClick={this.toggleMenu}>Open sidebar</Button>
+				<Sidebar open={toggle}> 
+					{menus.map( (menu, id) => { 
+						return <div className="menu" key={id}>{menu.icon} {menu.title} </div> 
+					})} 
+				</Sidebar> 
+			</div> 
+		); 
+	} 
+}
+
+
+// 사용자 입력 처리
+
+class App extends Component {
+	state = {
+		id: '',
+		password: ''
+	} 
+	
+	handleChange = (e) => {
+		console.log(e.target.name, e.target.value)
+		const { name, value } = e.target
+		this.setState({ [name]: value})
+	} 
+
+	login = (e) => {
+		e.preventDefault() // 새로고침 방지
+		console.log('login')
+	}
+
+	render(){ 
+		const { id, password } = this.state 
+		return ( 
+			<div className="App"> 
+				<form>
+					<label>ID<input type="text" name="id" value={id} placeholder="TYPE YOUR ID..." onChange={this.handleChange}/></label>
+					<br/><br/>
+					<label>PASSWORD<input type="password" name="password" value={password} placeholder="TYPE YOUR PASSWORD..." onChange={this.handleChange}/></label>
+					<div className="login-btn">
+						<Button handleClick={this.login} color="green" width='fullWidth'>Login</Button>
+					</div>
+				</form>
+			</div> 
+		); 
+	} 
+}
+
+// 파일 업로드 처리
+class App extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			fileName: '',
+			imgSrc: ''
+		}
+		this.fileInput = React.createRef() // Ref 생성
+	}
+	// 파일 유효성 검사
+	isValid = (type) => {
+		return type === 'image'
+	}
+
+	// 사용자가 파일을 선택하면 실행할 이벤트 핸들러 함수
+	handleChange = (e) => {
+		console.log(e.target.files[0])
+		const file = e.target.files[0] // 배열
+		const imgSrc = URL.createObjectURL(file)
+
+		// 파일 유효성 검사 로직
+		if(this.isValid(file.type.split('/')[0])) {
+			this.setState({fileName: file.name, imgSrc})
+		} else {
+			this.setState({fileName: 'File is not valid type !', imgSrc: ''})
+		}
+	} 
+
+	onpeFileWindow = () => {
+		this.fileInput.current.click() // 파일 입력창이 열림
+	}
+
+	render(){ 
+		const { fileName, imgSrc } = this.state 
+		return ( 
+			<div className="App"> 
+				<h1>{fileName}</h1>
+				{imgSrc !== '' && <img src={imgSrc} alt="preview-ing" width="300px" height="400px"/>}
+				<input type="file" className="Upload" onChange={this.handleChange} ref={this.fileInput} accept="image/*"/>
+				<Button handleClick={this.onpeFileWindow}>Upload</Button>
+			</div> 
+		); 
+	} 
+}
+
+// 이벤트 처리하기 연습과제 1 - 동영상 갤러리
+class App extends Component {
+	state = {
+		index: 0,
+	}
+
+	PrevVideo = () => {
+		const nextIndex = this.state.index - 1;
+		this.setState({index: (nextIndex < 0) ? Videos.length -1 : nextIndex})
+	}
+
+	NextVideo = () => {
+		const nextIndex = this.state.index + 1;
+		this.setState({index: (nextIndex > Videos.length -1) ? 0 : nextIndex})
+	} 
+
+	render(){ 
+		const { index } = this.state 
+		const title = Videos[index].title;
+		const src = Videos[index].src;
+		return ( 
+			<div className="App"> 
+				<h1>{title}</h1>
+				<iframe width="600" height="315" src={src}
+				title={title} frameBorder='0' allow='accelerometer; autoplay; clipboard-write;
+				encrypted-media; gyroscope; picture-in-picture' allowFullScreen></iframe>
+				<div className="control-btns">
+					<Button handleClick={this.PrevVideo}>Prev</Button>
+					<Button handleClick={this.NextVideo}>Next</Button>
+				</div>
+			</div> 
+		); 
+	} 
+}
+
+// 이벤트 처리하기 연습관제 2,3 - 로그인창 성공 실패 구현
+class App extends Component {
+	state = {
+		id: '',
+		password: '',
+		login: false,
+		open: false
+	} 
+	
+	handleChange = (e) => {
+		console.log(e.target.name, e.target.value)
+		const { name, value } = e.target
+		this.setState({ [name]: value})
+	} 
+
+	login = (e) => {
+		e.preventDefault() // 새로고침 방지
+		if ((this.state.id === loginData.USER_ID) && (this.state.password === loginData.USER_PASSWORD)) {
+			this.setState({login: true})
+		} else {
+			this.openModal();
+		}
+	}
+
+	openModal = () => {
+		this.setState({open: true});
+	}
+
+	closeModal = () => {
+		this.setState({open: false});
+	} 
+
+	render(){ 
+		const { id, password, login, open } = this.state 
+		// 선생님 풀이
+		const loginForm = (
+			<h1>로그인</h1>
+		)
+		const homePage = (
+			<h1>홈페이지</h1>
+		)
+		return (
+			<div className="App"> 
+				{/* 풀이 */}
+				{/* {login ? homePage : loginForm} */}
+				{/* 같은 방식인데 함수 사용 유무의 차이 */}
+				{login ?
+				<h1>HOME PAGE</h1>
+				:
+				<form>
+					<label>ID<input type="text" name="id" value={id} placeholder="TYPE YOUR ID..." onChange={this.handleChange}/></label>
+					<br/><br/>
+					<label>PASSWORD<input type="password" name="password" value={password} placeholder="TYPE YOUR PASSWORD..." onChange={this.handleChange}/></label>
+					<div className="login-btn">
+						<Button handleClick={this.login} color="green" width='fullWidth'>Login</Button>
+					</div>
+				</form>
+				}
+				<Modal open={open}>
+					<div className="body">로그인이 실패하였습니다.</div>
+					<div className="footer">
+						<Button size='small' color='grey' handleClick={this.closeModal}>닫기</Button>
+					</div>
+				</Modal>
+			</div> 
+		); 
+	} 
+}
+
+// 이벤트 처리하기 연습과제 4 - 다수의 이미지 업로드
+class App extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			files: []
+		}
+		this.fileInput = React.createRef() // Ref 생성
+	}
+	// 파일 유효성 검사
+	isValid = (type) => {
+		return type === 'image'
+	}
+
+	// 사용자가 파일을 선택하면 실행할 이벤트 핸들러 함수
+	handleChange = (e) => {
+		console.log(e.target.files)
+		const files = e.target.files // 배열
+		const uploadedFiles = [] // 빈 배열 생성
+		for (let file of files) {
+			// 파일 유효성 검사 로직
+			if(this.isValid(file.type.split('/')[0])) {
+				const name = file.name
+				const imgSrc = URL.createObjectURL(file)
+				uploadedFiles.push({name, imgSrc})
+			} else {
+				alert(`file [${file.name}] is not valid type !'`)
+			}
+		}
+		this.setState({files: uploadedFiles})
+	} 
+
+	onpeFileWindow = () => {
+		this.fileInput.current.click() // 파일 입력창이 열림
+	}
+
+	render(){ 
+		const { files } = this.state 
+		return ( 
+			<div className="App"> 
+				{files.length !== 0 && files.map((file, id) => {
+					return (
+						<div key={id}>
+							<h1>{file.name}</h1>
+							<img src={file.imgSrc} alt="preview-ing" width="300px" height="400px"/>
+						</div>
+					)
+				})}
+				<input type="file" className="Upload" onChange={this.handleChange} ref={this.fileInput} accept="image/*" multiple/>
+				<Button handleClick={this.onpeFileWindow}>Upload</Button>
+			</div> 
+		); 
+	} 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default App;
